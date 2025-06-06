@@ -1,0 +1,31 @@
+{
+  "name": "cookie-guardian-backend",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only src/main.ts",
+    "lint": "eslint .",
+    "build": "tsc -p .",
+    "start": "node dist/main.js",
+    "scan": "ts-node src/cli/scan.ts"
+  },
+  "dependencies": {
+    "axios": "^1",
+    "cheerio": "^1",
+    "dotenv": "^16",
+    "express": "^4",
+    "mongoose": "^8",
+    "puppeteer": "^22",
+    "tough-cookie": "^4"
+  },
+  "devDependencies": {
+    "@types/express": "^4",
+    "@types/node": "^20",
+    "@typescript-eslint/eslint-plugin": "^6",
+    "@typescript-eslint/parser": "^6",
+    "eslint": "^8",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2",
+    "typescript": "^5.8.3"
+  }
+}
