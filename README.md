@@ -13,3 +13,6 @@ This service crawls a website, classifies cookies and scripts and stores results
 
 ### Batch scanning
 Run `npm run scan -- domain1.com domain2.com` to process multiple domains from the command line.
+
+### Automatic scanning
+Set `DOMAINS` in `.env` to a comma-separated list of domains and run `npm run auto` to crawl them sequentially.
