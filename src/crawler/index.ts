@@ -1,21 +1,21 @@
-import puppeteer,{HTTPResponse,Protocol} from 'puppeteer';
-import cheerio from 'cheerio';
+import puppeteer, {HTTPResponse} from 'puppeteer';
+import * as cheerio from 'cheerio';
 import {Cookie} from '../models/Evaluation.js';
 import {classifyCookie,mergeRatings} from '../classifier/index.js';
 
 export async function crawl(domain:string){
   const url=domain.startsWith('http')?domain:`https://${domain}`;
-  const browser=await puppeteer.launch({headless:'new'});
-  const ctx=await browser.createIncognitoBrowserContext();
+  const browser=await puppeteer.launch({headless: true});
+  const ctx=await browser.createBrowserContext();
   const page=await ctx.newPage();
-  const setCookies:puppeteer.Protocol.Network.Cookie[]=[];
+  const setCookies:puppeteer.Cookie[]=[];
 
   page.on('response',async(resp:HTTPResponse)=>{
     const hdr=resp.headers();
     if(hdr['set-cookie']){
       const splitted=hdr['set-cookie'].split(/,(?=[^;]+?=)/);
       for(const raw of splitted){
-        const parsed=await ctx.cookies(url);
+        const parsed=await page.cookies(url);
         setCookies.push(...parsed);
       }
     }
@@ -26,17 +26,17 @@ export async function crawl(domain:string){
   const allCookies=[...setCookies,...clientCookies];
 
   const bannerHandle=await page.$('[class*=cookie],[id*=cookie],[class*=consent],[id*=consent]');
-  const bannerHtml=bannerHandle?await page.evaluate(el=>el.outerHTML,bannerHandle):null;
+  const bannerHtml=bannerHandle?await page.evaluate((el: Element)=> (el as HTMLElement).outerHTML, bannerHandle):null;
 
   const html=await page.content();
   const $=cheerio.load(html);
   const privLink=$('a[href*="privacy" i],a[href*="datenschutz" i]').first().attr('href')||null;
 
-  const scripts:{src:string;tracker:boolean;}[]=await page.$$eval('script[src]',els=>els.map(e=>({src:(e as HTMLScriptElement).src,tracker:false})));
+  const scripts:{src:string;tracker:boolean;}[]=await page.$$eval('script[src]',(els: Element[])=>els.map((e)=>({src:(e as HTMLScriptElement).src,tracker:false})));
 
   await browser.close();
 
-  const cookies:Cookie[]=allCookies.map(c=>{
+  const cookies:Cookie[]=(allCookies as puppeteer.Cookie[]).map(c=>{
     const {category,purpose}=classifyCookie(c);
     return{ name:c.name, domain:c.domain||domain, purpose, expires:c.expires?new Date(c.expires*1000):null, category};
   });
