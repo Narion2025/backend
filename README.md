@@ -4,7 +4,8 @@ This service crawls a website, classifies cookies and scripts and stores results
 
 ## Setup
 1. `cp .env.example .env` and fill in MongoDB connection info
-2. `npm install` (or `pnpm i`)
+2. `npm install` (or `pnpm i`) to install dependencies.
+   If Chrome download fails, run `PUPPETEER_SKIP_DOWNLOAD=1 npm install` instead.
 3. `npm run dev` starts the API on http://localhost:4000/v1
 
 ### REST endpoints
