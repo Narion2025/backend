@@ -7,7 +7,8 @@
     "lint": "eslint .",
     "build": "tsc -p .",
     "start": "node dist/main.js",
-    "scan": "ts-node src/cli/scan.ts"
+    "scan": "ts-node src/cli/scan.ts",
+    "crawl": "npm run build && node dist/cli/auto.js"
   },
   "dependencies": {
     "axios": "^1",

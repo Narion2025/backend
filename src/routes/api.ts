@@ -4,13 +4,13 @@ import {crawl} from '../crawler/index.js';
 
 export const router=Router();
 
-router.get('/evaluations/:domain',async(req,res)=>{
+router.get('/evaluations/:domain', async (req: import('express').Request, res: import('express').Response) => {
   const doc=await Evaluation.findOne({domain:req.params.domain}).sort({scanDate:-1});
   if(!doc)return res.status(404).json({msg:'not found'});
   res.json(doc);
 });
 
-router.post('/evaluations/scan',async(req,res)=>{
+router.post('/evaluations/scan', async (req: import('express').Request, res: import('express').Response) => {
   const {domain}=req.body;
   if(!domain)return res.status(400).json({msg:'domain required'});
   const data=await crawl(domain);

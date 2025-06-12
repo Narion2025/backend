@@ -13,3 +13,6 @@ This service crawls a website, classifies cookies and scripts and stores results
 
 ### Batch scanning
 Run `npm run scan -- domain1.com domain2.com` to process multiple domains from the command line.
+
+### Auto crawl
+`npm run crawl` builds the project and scans all domains listed in the `DOMAINS` environment variable. A sample list of popular domains is available in `data/top-sites.txt`.
