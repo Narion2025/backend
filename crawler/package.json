@@ -1,0 +1,29 @@
+{
+  "name": "cookiegard-crawler",
+  "version": "1.0.0",
+  "description": "Crawler für CookieGUARD zur Analyse von Cookie-Bannern und Datenschutz-Compliance",
+  "main": "crawler.js",
+  "scripts": {
+    "start": "node crawler.js",
+    "crawl": "node crawler.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cookie",
+    "crawler",
+    "gdpr",
+    "privacy",
+    "compliance"
+  ],
+  "author": "CookieGUARD Team",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^11.0.0",
+    "fs-extra": "^11.1.0",
+    "ora": "^5.4.1",
+    "proxy-agent": "^6.5.0",
+    "puppeteer": "^24.10.1",
+    "table": "^6.8.1"
+  }
+}
